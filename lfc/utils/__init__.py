@@ -189,9 +189,9 @@ def get_portal(pk=1):
 
     # At the moment the default portal should always exist.
     try:
-        portal = lfc.models.Portal.objects.get(pk=pk)
+        portal = lfc.models.Portal.objects.select_related('standard').get(pk=pk)
     except lfc.models.Portal.DoesNotExist:
-        portal = lfc.models.Portal.objects.filter()[0]
+        portal = lfc.models.Portal.objects.select_related('standard').filter()[0]
 
     cache.set(cache_key, portal)
     return portal
